@@ -21,6 +21,28 @@ export default {
         },
       });
     },
+    likes: ({ id }) => {
+      return client.like.count({
+        where: {
+          photoId: id,
+        },
+      });
+    },
+    comments: ({ id }) => {
+      return client.comment.count({
+        where: {
+          photoId: id,
+        },
+      });
+    },
+    isMine: async ({ userId }, _, { loggedInUser }) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      //return userId === loggedInUser.id ? true : false;
+      //굳이 위처럼 하지 않고 아래와 같이 작성해도 됨
+      return userId === loggedInUser.id;
+    },
   },
 
   Hashtag: {
