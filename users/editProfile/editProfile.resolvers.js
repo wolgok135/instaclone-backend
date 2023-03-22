@@ -3,6 +3,7 @@ import client from "../../client";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
 import GraphQLUpload from "graphql-upload/GraphQLUpload.js";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 const resolverFn = async (
   __,
@@ -11,6 +12,12 @@ const resolverFn = async (
 ) => {
   let avatarUrl = null;
   if (avatar) {
+    avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars");
+
+    /*
+    원래 작성했던 local server내 저장하는 코드는 아래에 주석으로 남겨둠...
+    그리고 위와 같이 amazon s3에 업로드 하는 걸로 바꿈.. 돈 들텐데...
+
     const { filename, createReadStream } = await avatar;
     const newFileName = `${loggedInUser.id}-${Date.now()}-${filename}`;
     const readStream = createReadStream();
@@ -19,6 +26,7 @@ const resolverFn = async (
     );
     readStream.pipe(writeStream);
     avatarUrl = `http://localhost:4000/static/${newFileName}`;
+    */
   }
 
   let uglyPassword = null;
