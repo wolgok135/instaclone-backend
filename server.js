@@ -5,6 +5,7 @@ import express from "express";
 import logger from "morgan";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils.js";
+import pubsub from "./pubsub";
 
 const PORT = process.env.PORT;
 
@@ -18,12 +19,13 @@ const startServer = async () => {
       };
     },
   });
-
+  console.log(pubsub);
   await apollo.start();
 
   const app = express();
   app.use(logger("tiny"));
   app.use(graphqlUploadExpress());
+  apollo.install;
 
   app.use("/static", express.static("uploads"));
   apollo.applyMiddleware({ app });
