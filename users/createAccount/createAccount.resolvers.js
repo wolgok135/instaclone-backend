@@ -23,8 +23,12 @@ export default {
         });
 
         if (existingUser) {
-          throw new Error("This username or email is aleady taken");
+          //throw new Error("This username or email is aleady taken");
           //Error를 Throw하면 이후의 아래 코드는 실행 되지 않음
+          return {
+            ok: false,
+            error: "existing user",
+          };
         }
 
         // hash password
@@ -32,7 +36,7 @@ export default {
 
         // save and return the user
 
-        return client.user.create({
+        await client.user.create({
           data: {
             userName,
             email,
@@ -41,6 +45,9 @@ export default {
             password: uglyPassword,
           },
         });
+        return {
+          ok: true,
+        };
       } catch (e) {
         return e;
       }
