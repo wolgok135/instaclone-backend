@@ -43,6 +43,28 @@ export default {
       //굳이 위처럼 하지 않고 아래와 같이 작성해도 됨
       return userId === loggedInUser.id;
     },
+    isLiked: async ({ id }, _, { loggedInUser }) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      const ok = await client.like.findUnique({
+        where: {
+          photoId_userId: {
+            userId: loggedInUser.id,
+            photoId: id,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (ok) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 
   Hashtag: {

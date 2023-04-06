@@ -6,8 +6,7 @@ export default {
   Mutation: {
     login: async (__, { userName, password }) => {
       // find user with args.username
-      console.log(userName);
-      console.log(password);
+
       const user = await client.user.findFirst({
         where: { userName: userName },
       });

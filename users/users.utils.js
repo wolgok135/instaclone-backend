@@ -23,6 +23,9 @@ export function protectedResolver(ourResolver) {
     if (!context.loggedInUser) {
       const query = info.operation.operation === "query";
       if (query) {
+        //토큰이 유효하지 않거나 없을 경우 null을 반환하고, 유효한 경우 resolverFunction을 실행함
+        console.log("return null");
+
         return null;
       } else {
         return {

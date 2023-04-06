@@ -57,8 +57,8 @@ model Like {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  photo     Photo    @relation(fields: [photoId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   photoId Int
   userId  Int
@@ -68,8 +68,8 @@ model Like {
 
 model Comment {
   id      Int   @id @default(autoincrement())
-  user    User  @relation(fields: [userId], references: [id])
-  photo   Photo @relation(fields: [photoId], references: [id])
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photo   Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
   userId  Int
   photoId Int
 
