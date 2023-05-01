@@ -7,9 +7,6 @@ export default {
         where: {
           id: id,
         },
-        include: {
-          likes: true,
-        },
       });
       return photo;
     },
